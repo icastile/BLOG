@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Grumblr</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.5/fullpage.min.css" integrity="sha512-hDXpx6vRwBR+f4rnj8BDQRpwfi4lvztz1KPkBPCG2XkTKiJ5Y6zq7/NsDmJRIQbquKchG0DVc6gmZiOE0ZXrvg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="signup.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+<div class="header" id="myHeader">
+    <div class="searchAndLogo">
+        <div class="headerG">
+            <h2>G</h2>
+        </div>
+        <form class="searchForm" role="search" id="form">
+            <button>
+                <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+            </button>
+            <input type="search" id="query" name="q" placeholder="Search google..." aria-label="Search through site content">
+        </form>
+    </div>
+    <div class="buttonContainer">
+        <div class="buttons">
+            <a href="login.html" id="login">Login</a>
+        </div>
+    </div>
+</div>
+<div id="fullPage">
+    <div class="section s1" id="sec1">
+        <div class="bg-img">
+            <div class="content">
+                <header>Grumblr</header>
+                <form name="insert" id="signup-form">
+                    <div class="field">
+                        <span class="fa fa-user"></span>
+                        <input name="username" id="email" type="text" required placeholder="GFU Email">
+                    </div>
+                    <div class="field space">
+                        <span class="fa fa-lock"></span>
+                        <input name="password" id="pass1" type="password" class="pass-key" required placeholder="Password">
+                        <span class="show">SHOW</span>
+                    </div>
+                    <div class="field space" id="fs1">
+                        <span class="fa fa-lock"></span>
+                        <input id="pass2" type="password" class="pass-key-verify" required placeholder="Verify Password">
+                        <span class="show_v">SHOW</span>
+                    </div>
+                    <div class="pass">
+                        <p>Already have an account? <a href="login.html">Login here</a>.</p>
+                    </div>
+                    <div class="field">
+                        <button class="signup_submit" value="SIGN UP">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+    const f = document.getElementById('form');
+    const q = document.getElementById('query');
+    const google = 'https://www.google.com/search?q=+';
+
+    function submitted(event) {
+        event.preventDefault();
+        const url = google + q.value;
+        const win = window.open(url, '_blank');
+        win.focus();
+    }
+
+    f.addEventListener('submit', submitted);
+
+    const submit_button = document.querySelector('.signup_submit');
+    submit_button.addEventListener('click', checkPassword);
+
+
+    const pass_field = document.querySelector('.pass-key');
+    const showBtn = document.querySelector('.show');
+    showBtn.addEventListener('click', function(){
+        if(pass_field.type === "password"){
+            pass_field.type = "text";
+            showBtn.textContent = "HIDE";
+            showBtn.style.color = "#3498db";
+        }else
+        {
+            pass_field.type = "password";
+            showBtn.textContent = "SHOW";
+            showBtn.style.color = "#222";
+        }
+    });
+
+    const pass_field_verify = document.querySelector('.pass-key-verify');
+    const showBtn_verify = document.querySelector('.show_v');
+    showBtn_verify.addEventListener('click', function() {
+        if (pass_field_verify.type === "password") {
+            pass_field_verify.type = "text";
+            showBtn_verify.textContent = "HIDE";
+            showBtn_verify.style.color = "#3498db";
+        } else {
+            pass_field_verify.type = "password";
+            showBtn_verify.textContent = "SHOW";
+            showBtn_verify.style.color = "#222";
+        }
+    });
+
+    // Function to check if both passwords
+    // are the same or not
+    function checkPassword() {
+        let password1 = document.getElementById("pass1").value;
+        let password2 = document.getElementById("pass2").value;
+
+        // If password not entered
+        if (password1 === '')
+            alert ("Please enter Password");
+
+        // If confirm password not entered
+        else if (password2 === '')
+            alert ("Please confirm password");
+
+        // If Not same return False.
+        else if (password1 !== password2) {
+            alert ("\nPassword did not match: Please try again...")
+        }
+        // If same return True.
+        else if (password1 === password2){
+            //alert("Password Match: Welcome to Grumblr!")
+            console.log("HI");
+            createUser();
+        }
+    }
+    //document.getElementById("signup-form").addEventListener('click', createUser);
+
+    async function submitForm() {
+        let response = await fetch('/auth/start.php', {
+            method:'POST',
+            body: new FormData(document.getElementById('signup-form')),
+        });
+        let data = await response.json();
+        if (data.username) {
+            window.location = '/home.html';
+        } else {
+            document.getElementById('errorMessage').innerText = 'Not Logged In';
+        }
+    }
+
+    async function createUser() {
+        console.log("HI");
+            let response = await fetch('blog_user.php', {
+            method: 'POST',
+            body: new FormData(document.getElementById('signup-form')),
+        }).finally(() => console.log(response));
+/*
+        let data = await response.json();
+        if (data.username) {
+            await submitForm().finally(() => window.location = 'home.html');
+        } else {
+            document.getElementById('errorMessage').innerText = 'Not Logged In';
+        }
+        console.log(data);
+        */
+    }
+
+</script>
+</body>
+</html>

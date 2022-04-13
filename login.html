@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Grumblr</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.5/fullpage.min.css" integrity="sha512-hDXpx6vRwBR+f4rnj8BDQRpwfi4lvztz1KPkBPCG2XkTKiJ5Y6zq7/NsDmJRIQbquKchG0DVc6gmZiOE0ZXrvg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="login.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+<div class="header" id="myHeader">
+    <div class="searchAndLogo">
+        <div class="headerG">
+            <h2>G</h2>
+        </div>
+        <form class="searchForm" role="search" id="form">
+            <button>
+                <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+            </button>
+            <input type="search" id="query" name="q" placeholder="Search google..." aria-label="Search through site content">
+        </form>
+    </div>
+    <div class="buttonContainer">
+        <div class="buttons">
+            <a href="signup.html" id="signup">Sign Up</a>
+        </div>
+    </div>
+</div>
+<div id="fullPage">
+    <div class="section s1" id="sec1">
+        <div class="bg-img">
+            <div class="content">
+                <header>Grumblr</header>
+                <form name="login" method="POST", id="login-form">
+                    <div class="field">
+                        <span class="fa fa-user"></span>
+                        <input type="text" required placeholder="GFU Email">
+                    </div>
+                    <div class="field space">
+                        <span class="fa fa-lock"></span>
+                        <input type="password" class="pass-key" required placeholder="Password">
+                        <span class="show">SHOW</span>
+                    </div>
+                    <div class="field">
+                        <input class="login_submit" type="submit" value="LOGIN">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    const submit_button = document.querySelector('.login_submit');
+    submit_button.addEventListener('click', checkUser);
+
+    async function checkUser() {
+
+        let response = await fetch('login.php', {
+            method: 'POST',
+            body: new FormData(document.getElementById('login-form')),
+        }).catch((error) => console.log(error));
+
+        let data = await response.text();
+        console.log(data);
+        if (data.message) {
+            window.location = 'home.html';
+        } else {
+            document.getElementById('errorMessage').innerText = 'Not Logged In';
+        }
+        console.log(data.message);
+    }
+
+    const f = document.getElementById('form');
+    const q = document.getElementById('query');
+    const google = 'https://www.google.com/search?q=+';
+    const site = 'hello';
+
+    function submitted(event) {
+        event.preventDefault();
+        const url = google + q.value;
+        const win = window.open(url, '_blank');
+        win.focus();
+    }
+
+    f.addEventListener('submit', submitted);
+
+
+
+
+    const pass_field = document.querySelector('.pass-key');
+    const showBtn = document.querySelector('.show');
+    showBtn.addEventListener('click', function(){
+        if(pass_field.type === "password"){
+            pass_field.type = "text";
+            showBtn.textContent = "HIDE";
+            showBtn.style.color = "#3498db";
+        }else
+        {
+            pass_field.type = "password";
+            showBtn.textContent = "SHOW";
+            showBtn.style.color = "#222";
+        }
+    });
+</script>
+</body>
+</html>
