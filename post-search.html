@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendors</title>
+    <link rel="stylesheet" href="post-search.css" />
+</head>
+<body onload="showSearchValue()" style="background: url('images/orange.jpg'); background-size: cover;">
+<div id="page">
+    <div class="header" id="myHeader">
+        <div class="searchAndLogo">
+            <div class="headerG">
+                <h2 id="logo">G</h2>
+            </div>
+
+            <form class="searchForm" role="search" id="form">
+                <button>
+                    <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+                </button>
+                <input type="search" id="query" name="q" placeholder="Search for user..." aria-label="Search through site content">
+            </form>
+        </div>
+        <div class="buttonContainer">
+            <div class="buttons">
+                <input class="logout" id="logout" type="submit" value="Log Out">
+                <a href="make-a-post.html" id="post">Post</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="search-results"></div><br><br>
+<script>
+
+    const f = document.getElementById('form');
+    const q = document.getElementById('query');
+
+    async function submitted(event) {
+        event.preventDefault();
+        if (q.value !== "")
+        {
+            sessionStorage.setItem("search", q.value);
+            window.location = 'post-search.html';
+        }
+    }
+
+    f.addEventListener('submit', submitted);
+
+    async function showSearchValue() {
+        let search = sessionStorage.getItem("search");
+        console.log('blog-post.php?username='+search);
+        let response = await fetch('blog-post.php?username='+search);
+
+        let data = await response.json();
+        console.log(data);
+
+        const infoDiv = document.getElementById('search-results');
+        if (data.length > 0) {
+            for (let i = 0; i < data.length; i++) {
+                const input = infoDiv.appendChild(document.createElement('button'));
+                input.type = "button";
+                input.className = "recipe";
+                input.name = 'post_id' + data[i].id;
+                input.id = 'post_id' + data[i].id;
+                input.style.backgroundColor = "#ffdab9";
+                input.style.fontSize = "30px";
+                input.style.fontWeight = "bold";
+                input.style.borderRadius = "5px";
+                input.style.width = "50%";
+                input.style.height = "100%";
+                input.style.cursor = "pointer";
+                input.style.color = "white";
+                input.style.textAlign = "center";
+
+                input.innerText = JSON.parse(data[i].extra).recipe_title;
+                input.appendChild(document.createElement("br"));
+                // span to go inside button
+                const span0 = input.appendChild(document.createElement('span'));
+                span0.innerText = JSON.parse(data[i].extra).desc;
+                span0.style.fontSize = "22px";
+                input.appendChild(document.createElement("br"));
+                // span to go inside button
+                const span1 = input.appendChild(document.createElement('span'));
+                span1.innerText = data[i].post_date;
+                span1.style.fontSize = "15px";
+
+                infoDiv.appendChild(input);
+                infoDiv.appendChild(document.createElement("br"));
+
+                input.addEventListener('click', function () {
+                    sessionStorage.setItem("id", data[i].id);
+                    window.location = 'recipe-page.html'
+                });
+            }
+        }
+        else {
+            const input = infoDiv.appendChild(document.createElement('button'));
+            input.type = "button";
+            input.style.fontSize = "30px";
+            input.style.fontWeight = "bold";
+            input.style.borderRadius = "5px";
+            input.style.width = "50%";
+            input.style.height = "100%";
+            input.style.cursor = "initial";
+            input.style.color = "white";
+            input.style.textAlign = "center";
+
+            input.innerText = "No results match: " + sessionStorage.getItem("search");
+            input.appendChild(document.createElement("br"));
+        }
+
+
+        //let recipe_extra = data.extra;
+        //console.log(recipe_extra);
+
+        //let recipe_title = JSON.parse(data.extra);
+        //console.log(recipe_title.recipe_title);
+
+        //let recipe = JSON.stringify(data.extra);
+        //console.log(recipe.recipe_title);
+
+        //infoDiv.innerText = data.id;
+        //infoDiv.style.color = 'black';
+    }
+
+
+    // listen for log out button
+    const submit_button = document.querySelector('.logout');
+    submit_button.addEventListener('click', logItOnOut);
+
+    async function logItOnOut() {
+        let response = await fetch('/auth/end.php', {
+            method:'POST',
+        });
+        let data = await response.json();
+        if (data.message) {
+            window.location = '/home.html';
+        } else {
+            document.getElementById('errorMessage').innerText = 'Not Logged In';
+        }
+    }
+</script>
+</body>
+</html>

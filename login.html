@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Grumblr</title>
+    <title>Grumblr Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.5/fullpage.min.css" integrity="sha512-hDXpx6vRwBR+f4rnj8BDQRpwfi4lvztz1KPkBPCG2XkTKiJ5Y6zq7/NsDmJRIQbquKchG0DVc6gmZiOE0ZXrvg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="login.css" rel="stylesheet" type="text/css"/>
@@ -13,13 +13,13 @@
 <div class="header" id="myHeader">
     <div class="searchAndLogo">
         <div class="headerG">
-            <h2>G</h2>
+            <h2 id="logo">G</h2>
         </div>
         <form class="searchForm" role="search" id="form">
             <button>
                 <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
             </button>
-            <input type="search" id="query" name="q" placeholder="Search google..." aria-label="Search through site content">
+            <input type="search" id="query" name="q" placeholder="Search for user..." aria-label="Search through site content">
         </form>
     </div>
     <div class="buttonContainer">
@@ -36,11 +36,11 @@
                 <form name="login" method="POST", id="login-form">
                     <div class="field">
                         <span class="fa fa-user"></span>
-                        <input type="text" required placeholder="GFU Email">
+                        <input name="username" type="text" required placeholder="Username">
                     </div>
                     <div class="field space">
                         <span class="fa fa-lock"></span>
-                        <input type="password" class="pass-key" required placeholder="Password">
+                        <input name="password" type="password" class="pass-key" required placeholder="Password">
                         <span class="show">SHOW</span>
                     </div>
                     <div class="field">
@@ -54,40 +54,52 @@
 <script>
 
     const submit_button = document.querySelector('.login_submit');
-    submit_button.addEventListener('click', checkUser);
-
-    async function checkUser() {
-
+    submit_button.addEventListener('click', async function (event) {
+        event.preventDefault();
+        let formData = new FormData(document.getElementById('login-form'));
         let response = await fetch('login.php', {
-            method: 'POST',
-            body: new FormData(document.getElementById('login-form')),
-        }).catch((error) => console.log(error));
+            method: "POST",
+            body: JSON.stringify(Object.fromEntries(formData.entries())),
+        });
 
-        let data = await response.text();
+        let data = await response.json();
         console.log(data);
         if (data.message) {
-            window.location = 'home.html';
+            await submitForm().finally(() => window.location = 'home-loggedIN.html');
+        } else {
+            alert("Incorrect username or password");
+            window.location = 'login.html';
+            //document.getElementById('errorMessage').innerText = 'Not Logged In';
+        }
+        console.log(data.message);
+    });
+
+    async function submitForm() {
+        let response = await fetch('/auth/start.php', {
+            method:'POST',
+            body: new FormData(document.getElementById('login-form')),
+        });
+        let data = await response.json();
+        if (data.username) {
+            window.location = '/home.html';
         } else {
             document.getElementById('errorMessage').innerText = 'Not Logged In';
         }
-        console.log(data.message);
     }
 
     const f = document.getElementById('form');
     const q = document.getElementById('query');
-    const google = 'https://www.google.com/search?q=+';
-    const site = 'hello';
 
-    function submitted(event) {
+    async function submitted(event) {
         event.preventDefault();
-        const url = google + q.value;
-        const win = window.open(url, '_blank');
-        win.focus();
+        if (q.value !== "")
+        {
+            sessionStorage.setItem("search", q.value);
+            window.location = 'post-search.html';
+        }
     }
 
     f.addEventListener('submit', submitted);
-
-
 
 
     const pass_field = document.querySelector('.pass-key');

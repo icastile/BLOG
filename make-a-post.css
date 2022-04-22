@@ -59,6 +59,7 @@
     opacity: .2;
 }
 
+
 svg {
     color: rgb(17, 2, 2);
     opacity: 1;
@@ -76,7 +77,7 @@ svg {
     font: 16px system-ui;
     background: lightgrey;
     color: rgb(0, 0, 0);
-    height: 75%;
+    height: 73%;
     width: 100%;
     padding: 6px 10px;
     border-radius: 0 5px 5px 0;
@@ -96,6 +97,7 @@ svg {
     gap: 10px;
     float: right;
     width:300px;
+    background: transparent;
 }
 
 h1{
@@ -103,43 +105,80 @@ h1{
     text-align: center;
 }
 
-.s1{
-    background: url('images/four.jpg');
-    background-size: cover;
-
-}
-.s2{
-    background: url('images/two.jpg');
-    background-size: cover;
-
-}
-.s3{
-    background: url('images/three.jpg');
-    background-size: cover;
-
-}
-
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }
 
-span{
-    background: white !important;
+
+#form_head {
+    margin-top: 5%;
 }
 
-fullPage{
-    width: 80%;
-    margin: 0 auto;
+.add_image {
+    margin-left: 71.5%;
+    background-color: #00b8ff;
+    color: white;
+    cursor: pointer;
+    width: 25%;
+    height: 12%;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    padding: 6px 10px;
 }
 
-input {
+#ingredients {
+    display: flex;
+    flex-direction: row;
+    padding: 2px;
+    gap: 20px;
+}
+
+.image_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 150px;
+}
+
+input, a{
+
     all: unset;
     font: 16px system-ui;
+    background: white;
     color: rgb(0, 0, 0);
     height: 100%;
     width: 100%;
     padding: 6px 10px;
+    border-radius: 5px;
+
+}
+
+#num_ingredients {
+    background-color: #00b8ff;
+    color: white;
+    width: 15%;
+    text-align: center;
+}
+
+select {
+
+    float: right;
+    width: 15%;
+}
+
+#recipe_title {
+    margin-top: 20px;
+    width: 97%;
+}
+
+#desc {
+    width: 97%;
+}
+
+#servings {
+    margin-left: 25%;
 }
 
 ::placeholder {
@@ -155,17 +194,7 @@ button {
 }
 
 
-input[type=submit] {
-    color: white;
-    cursor: pointer;
-    width: 60px;
-    height: 23%;
-    border-radius: 5px;
-    text-align: center;
-}
-
-
-#login{
+#logout{
     background-color:#00cf35;
     color: white;
     cursor: pointer;
@@ -178,7 +207,7 @@ input[type=submit] {
 
 }
 
-#signup{
+#post{
     background-color: #00b8ff;
     color: white;
     cursor: pointer;
@@ -190,123 +219,46 @@ input[type=submit] {
     padding: 6px 10px;
 }
 
-
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700|Poppins:400,500&display=swap');
 
-
-.content{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 999;
-    text-align: center;
-    padding: 60px 32px;
-    width: 370px;
-    transform: translate(-50%,-50%);
-    background: transparent;
-}
-
-.field{
-    position: relative;
-    height: 45px;
-    width: 100%;
-    display: flex;
-    background: rgba(255,255,255,0.94);
+.page-contain {
+    display: grid;
+    place-items: center;
+    background: #ffdab9;
+    height: 90%;
+    left      : 50%;
+    top       : 50%;
+    position  : absolute;
+    transform : translate(-50%, -50%);
+    width: 40%;
     border-radius: 5px;
-}
-
-.field span{
-    color: #222;
-    width: 40px;
-    line-height: 45px;
+    margin: 10px;
 
 }
-.field input{
-    height: 100%;
-    width: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #222;
-    font-size: 16px;
-    font-family: 'Poppins',sans-serif;
-}
-.space{
-    margin-top: 16px;
+
+
+input::placeholder {
+    opacity: .5;
 }
 
-.show{
-    position: absolute;
-    right: 13px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #222;
-    display: none;
-    cursor: pointer;
-    font-family: 'Montserrat',sans-serif;
+#form_head {
+    text-align: center;
 }
 
-.pass-key:valid ~ .show{
-    display: block;
+form {
+    width: 90%;
 }
-.pass{
-    text-align: left;
-    margin: 10px 0;
-}
-.pass a{
+
+
+
+.submit {
+    background-color: #00b8ff;
+    width: 8%;
+    text-align: center;
     color: white;
-    text-decoration: none;
-    font-family: 'Poppins',sans-serif;
-}
-.pass:hover a{
-    text-decoration: underline;
-}
-.field input[type="submit"]{
-    background: #00b8ff;
-    border: 1px solid #00b8ff;
-    color: white;
-    font-size: 18px;
-    letter-spacing: 1px;
-    font-weight: 600;
-    cursor: pointer;
+    border-radius: 5px;
+    margin-top:52.8%;
+    margin-left: 71%;
 
-    font-family: 'Montserrat',sans-serif;
 }
-
-.login{
-    margin: 20px 0;
-    border-radius: 15px;
-    font-family: 'Poppins',sans-serif;
-}
-.links{
-    display: flex;
-    cursor: pointer;
-    color: white;
-    margin: 0 0 20px 0;
-}
-
-.links i{
-    font-size: 17px;
-}
-i span{
-    margin-left: 8px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    font-size: 16px;
-    font-family: 'Poppins',sans-serif;
-}
-.signup{
-    font-size: 15px;
-    color: white;
-    font-family: 'Poppins',sans-serif;
-}
-.signup a{
-    color: #3498db;
-    text-decoration: none;
-}
-.signup a:hover{
-    text-decoration: underline;
-}
-
-
 

@@ -1,0 +1,410 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.header{
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+}
+
+.searchAndLogo{
+    display: flex;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+}
+
+.headerG{
+    font-family: 'Bookman Old Style', Bold;
+    font-size: 30px;
+    margin-right: 20px;
+    margin-left: 20px;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    color: white;
+    margin-top: 35px;
+    border-radius: 5px;
+}
+
+.content header{
+    color: white;
+    font-size: 48px;
+    font-weight: bolder;
+    margin: 0 0 35px 0;
+    font-family: 'Bookman Old Style', Bold;
+}
+
+#logo{
+    margin-top: -10px;
+}
+
+.searchForm {
+    margin-top: 33px;
+    background-color: #f3f4fa;
+    width: 300px;
+    height: 44px;
+    border-radius: 5px;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    opacity: .2;
+}
+
+
+svg {
+    color: rgb(17, 2, 2);
+    opacity: 1;
+    fill: currentColor;
+    width: 40px;
+    padding-left:12px;
+    padding-top:5px;
+    height: 100%;
+    background-color:lightgrey;
+    border-radius: 5px 0 0 5px;
+}
+
+#query{
+    all: unset;
+    font: 16px system-ui;
+    background: lightgrey;
+    color: rgb(0, 0, 0);
+    height: 73%;
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 0 5px 5px 0;
+}
+
+.buttonContainer{
+    position: sticky;
+    z-index: 5;
+    margin-top:2%;
+    margin-right: -5%;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    float: right;
+    width:300px;
+    background: transparent;
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+}
+
+#logout{
+    all: unset;
+    font: 16px system-ui;
+    background-color:#00cf35;
+    color: white;
+    cursor: pointer;
+    width: 70px;
+    height: 23%;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    padding: 6px 10px;
+
+}
+
+#post{
+    all: unset;
+    background-color: #00b8ff;
+    font: 16px system-ui;
+    color: white;
+    cursor: pointer;
+    width: 77px;
+    height: 23%;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    padding: 6px 10px;
+}
+body{
+    font-family: Garamond, serif;
+    font-size: 18px;
+}
+
+
+
+
+.content-top h1{
+    padding-bottom: 30px;
+}
+
+.content-top h3{
+    padding-bottom: 30px;
+}
+.content-top a{
+    font-size: 20px;
+    color: #96ceb4;
+    text-decoration: none;
+
+}
+
+main{
+    display: block;
+    flex-direction: row;
+    height: calc(100vh - 100px);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: 350px;
+    margin-right: 350px;
+    margin-top: 100px;
+}
+
+
+main img{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+
+
+
+main h1{
+    padding-top: 60px;
+    font-size: 54px;
+    color: #ff6f69;
+    text-transform: uppercase;
+}
+
+main h2{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    font-size: 54px;
+    color: #ff6f69;
+    text-transform: uppercase;
+}
+
+main h2{
+    font-size: 25px;
+    color: #ffcc5c;
+    font-weight: 400;
+    letter-spacing: 8px;
+
+}
+main p{
+    padding-top:20px;
+    padding-bottom: 20px;
+    font-weight: 400;
+    color: #333;
+    line-height: 31px;
+    margin: 30px 0;
+    width: auto;
+}
+
+.start{
+    padding: 15px 30px;
+    background: #96ceb4;
+    color: #fff;
+    outline: none;
+    border: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 50px;
+}
+
+/* The container */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    border-radius: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#instruction_p{
+    font-size: 22px;
+    text-align: left;
+    margin-left: 8%;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.r-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+}
+
+.recipe-head{
+    background-color: #cffae6;
+}
+
+
+.serving{
+    margin-top: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 10px;
+    background-color: #ecfcf4;
+
+}
+
+.ingredients-header{
+    padding-left: 10px;
+    text-align: left;
+    background-color: rgb(255, 251, 251);
+}
+
+.ingredients{
+    text-align: left;
+    background-color: rgb(255, 251, 251);
+}
+
+
+.instructions h3{
+    padding-left: 10px;
+    text-align: left;
+    background-color: rgb(255, 251, 251);
+}
+
+.instructions ol{
+    padding-left: 15px;
+}
+
+.instructions ol li{
+    margin-left: 25px;
+    padding-left: 35px;
+    text-align: left;
+    font-size: 22px;
+}
+
+li{
+    margin: 10px 0;
+}
+
+.instructions{
+    background-color: rgb(255, 251, 251);
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    border-collapse: collapse;
+}
+
+table th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+table td{
+    background: #edf8f3;
+}
+
+table th, tfoot{
+    background: #cffae6;
+}
+
+.description-container{
+    margin-top: 100px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fd9692;
+    opacity: .8;
+    border-radius: 8px;
+}
+
+.description{
+    width: 60%;
+}
+
+.description h2{
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.profile{
+    width:40%;
+}
+
+

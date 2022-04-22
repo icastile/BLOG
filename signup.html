@@ -13,13 +13,13 @@
 <div class="header" id="myHeader">
     <div class="searchAndLogo">
         <div class="headerG">
-            <h2>G</h2>
+            <h2 id="logo">G</h2>
         </div>
         <form class="searchForm" role="search" id="form">
             <button>
                 <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
             </button>
-            <input type="search" id="query" name="q" placeholder="Search google..." aria-label="Search through site content">
+            <input type="search" id="query" name="q" placeholder="Search for user..." aria-label="Search through site content">
         </form>
     </div>
     <div class="buttonContainer">
@@ -52,7 +52,8 @@
                         <p>Already have an account? <a href="login.html">Login here</a>.</p>
                     </div>
                     <div class="field">
-                        <button class="signup_submit" value="SIGN UP">Sign Up</button>
+                        <input class="signup_submit" type="submit" value="SIGN UP">
+
                     </div>
                 </form>
             </div>
@@ -64,20 +65,17 @@
 
     const f = document.getElementById('form');
     const q = document.getElementById('query');
-    const google = 'https://www.google.com/search?q=+';
 
-    function submitted(event) {
+    async function submitted(event) {
         event.preventDefault();
-        const url = google + q.value;
-        const win = window.open(url, '_blank');
-        win.focus();
+        if (q.value !== "")
+        {
+            sessionStorage.setItem("search", q.value);
+            window.location = 'post-search.html';
+        }
     }
 
     f.addEventListener('submit', submitted);
-
-    const submit_button = document.querySelector('.signup_submit');
-    submit_button.addEventListener('click', checkPassword);
-
 
     const pass_field = document.querySelector('.pass-key');
     const showBtn = document.querySelector('.show');
@@ -108,9 +106,11 @@
         }
     });
 
+    const submit_button = document.querySelector('.signup_submit');
+    submit_button.addEventListener('click', function (event) {
     // Function to check if both passwords
     // are the same or not
-    function checkPassword() {
+        event.preventDefault();
         let password1 = document.getElementById("pass1").value;
         let password2 = document.getElementById("pass2").value;
 
@@ -129,10 +129,10 @@
         // If same return True.
         else if (password1 === password2){
             //alert("Password Match: Welcome to Grumblr!")
-            console.log("HI");
             createUser();
         }
-    }
+    });
+
     //document.getElementById("signup-form").addEventListener('click', createUser);
 
     async function submitForm() {
@@ -149,20 +149,20 @@
     }
 
     async function createUser() {
-        console.log("HI");
-            let response = await fetch('blog_user.php', {
-            method: 'POST',
-            body: new FormData(document.getElementById('signup-form')),
-        }).finally(() => console.log(response));
-/*
+        let formData = new FormData(document.getElementById('signup-form'));
+        let response = await fetch('blog_user.php', {
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
+        });
+
         let data = await response.json();
-        if (data.username) {
-            await submitForm().finally(() => window.location = 'home.html');
+        if (data.message) {
+            await submitForm().finally(() => window.location = 'home-loggedIN.html');
         } else {
             document.getElementById('errorMessage').innerText = 'Not Logged In';
         }
         console.log(data);
-        */
+
     }
 
 </script>

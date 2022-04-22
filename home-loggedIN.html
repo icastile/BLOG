@@ -8,11 +8,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.5/fullpage.min.css" integrity="sha512-hDXpx6vRwBR+f4rnj8BDQRpwfi4lvztz1KPkBPCG2XkTKiJ5Y6zq7/NsDmJRIQbquKchG0DVc6gmZiOE0ZXrvg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="home.css" rel="stylesheet" type="text/css"/>
+    <link href="home-loggedIN.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 
 </head>
-<body>
+<body onload="getUser()">
 <div class="header" id="myHeader">
     <div class="searchAndLogo">
         <div class="headerG">
@@ -28,8 +28,8 @@
     </div>
     <div class="buttonContainer">
         <div class="buttons">
-            <a href="login.html" id="login">Login</a>
-            <a href="signup.html" id="signup">Sign Up</a>
+            <input class="logout" id="logout" type="submit" value="Log Out">
+            <a href="make-a-post.html" id="post">Post</a>
         </div>
     </div>
 </div>
@@ -37,7 +37,8 @@
     <div class="section s1" id="sec1">
         <div class="bg-img">
             <div class="content">
-                <header>Welcome to Grumblr</header>
+                <header id="header">Welcome to Grumblr</header>
+
             </div>
         </div>
     </div>
@@ -88,23 +89,34 @@
 
     f.addEventListener('submit', submitted);
 
+    const submit_button = document.querySelector('.logout');
+    submit_button.addEventListener('click', logItOnOut);
 
-
-
-    const pass_field = document.querySelector('.pass-key');
-    const showBtn = document.querySelector('.show');
-    showBtn.addEventListener('click', function(){
-        if(pass_field.type === "password"){
-            pass_field.type = "text";
-            showBtn.textContent = "HIDE";
-            showBtn.style.color = "#3498db";
-        }else
-        {
-            pass_field.type = "password";
-            showBtn.textContent = "SHOW";
-            showBtn.style.color = "#222";
+    async function logItOnOut() {
+        let response = await fetch('/auth/end.php', {
+            method:'POST',
+        });
+        let data = await response.json();
+        if (data.message) {
+            window.location = '/home.html';
+        } else {
+            document.getElementById('errorMessage').innerText = 'Not Logged In';
         }
-    });
+    }
+
+    async function getUser() {
+        let response = await fetch('/auth/status.php', {
+            method:'POST',
+        });
+        let data = await response.json();
+        if (data.username)
+        {
+            document.getElementById("header").innerHTML += ", " + data.username;
+        }
+    }
+
+
+
 </script>
 </body>
 </html>

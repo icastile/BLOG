@@ -3,7 +3,7 @@
 function connect()
 {
     try {
-        $db = new PDO("pgsql:dbname=blog host=localhost password=314dev user=dev");
+        $db = new PDO("pgsql:dbname=blog host=icastile19@web.cs.georgefox.edu password=icastile19 user=icastile19");
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $err) {
         $db = null;

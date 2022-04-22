@@ -1,3 +1,105 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.header{
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+}
+
+.searchAndLogo{
+    display: flex;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+}
+
+.headerG{
+    font-family: 'Bookman Old Style', Bold;
+    font-size: 30px;
+    margin-right: 20px;
+    margin-left: 20px;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    color: white;
+    margin-top: 35px;
+    border-radius: 5px;
+}
+
+.content header{
+    color: white;
+    font-size: 48px;
+    font-weight: bolder;
+    margin: 0 0 35px 0;
+    font-family: 'Bookman Old Style', Bold;
+}
+
+#logo{
+    margin-top: -10px;
+}
+
+.searchForm {
+    margin-top: 33px;
+    background-color: #f3f4fa;
+    width: 300px;
+    height: 44px;
+    border-radius: 5px;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    opacity: .2;
+}
+
+
+svg {
+    color: rgb(17, 2, 2);
+    opacity: 1;
+    fill: currentColor;
+    width: 40px;
+    padding-left:12px;
+    padding-top:5px;
+    height: 100%;
+    background-color:lightgrey;
+    border-radius: 5px 0 0 5px;
+}
+
+#query{
+    all: unset;
+    font: 16px system-ui;
+    background: lightgrey;
+    color: rgb(0, 0, 0);
+    height: 73%;
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 0 5px 5px 0;
+}
+
+.buttonContainer{
+    position: sticky;
+    z-index: 5;
+    margin-top:2%;
+    margin-right: -5%;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    float: right;
+    width:300px;
+    background: transparent;
+}
+
 h1{
     font-family: 'Montserrat';
     text-align: center;
@@ -19,18 +121,6 @@ fullPage{
     margin: 0 auto;
 }
 
-.searchForm {
-    margin-top: 33px;
-    background-color: #f3f4fa;
-    width: 300px;
-    height: 44px;
-    border-radius: 5px;
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    opacity: .2;
-}
-
 input {
     all: unset;
     font: 16px system-ui;
@@ -45,62 +135,11 @@ input {
     opacity: .8;
 }
 
-svg {
-    color: rgb(7, 0, 0);
-    opacity: 1;
-    fill: currentColor;
-    width: 24px;
-    height: 24px;
-    padding: 10px;
-}
-
 button {
     all: unset;
     cursor: pointer;
     width: 44px;
     height: 44px;
-}
-
-.header{
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 5;
-}
-
-.searchAndLogo{
-    display: flex;
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    z-index: 5;
-}
-
-.buttonContainer{
-    position: sticky;
-    z-index: 5;
-    margin-top:2%;
-    margin-right: -5%;
-}
-
-.headerG{
-    font-family: 'Bookman Old Style', Bold;
-    font-size: 25px;
-    margin-right: 20px;
-    margin-left: 25px;
-    font-weight: bold;
-    color: white;
-    margin-top: 35px;
-}
-
-.buttons{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    float: right;
-    width:300px;
 }
 
 input[type=submit] {
@@ -141,13 +180,6 @@ input[type=submit] {
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700|Poppins:400,500&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-}
-
 .content{
     position: absolute;
     top: 50%;
@@ -160,13 +192,6 @@ input[type=submit] {
     background: transparent;
 }
 
-.content header{
-    color: white;
-    font-size: 48px;
-    font-weight: bolder;
-    margin: 0 0 35px 0;
-    font-family: 'Bookman Old Style', Bold;
-}
 .field{
     position: relative;
     height: 45px;

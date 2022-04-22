@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>POST</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.5/fullpage.min.css" integrity="sha512-hDXpx6vRwBR+f4rnj8BDQRpwfi4lvztz1KPkBPCG2XkTKiJ5Y6zq7/NsDmJRIQbquKchG0DVc6gmZiOE0ZXrvg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="make-a-post.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body style="background: url('images/orange.jpg'); background-size: cover;">
+<div id="page">
+    <div class="header" id="myHeader">
+        <div class="searchAndLogo">
+            <div class="headerG">
+                <h2 id="logo">G</h2>
+            </div>
+
+            <form class="searchForm" role="search" id="form">
+                <button>
+                    <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+                </button>
+                <input type="search" id="query" name="q" placeholder="Search for user..." aria-label="Search through site content">
+            </form>
+        </div>
+        <div class="buttonContainer">
+            <div class="buttons">
+                <input class="logout" id="logout" type="submit" value="Log Out">
+                <a href="make-a-post.html" id="post">Post</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="page-contain">
+        <h2 id="form_head"> Ready to Post?</h2>
+        <form id="add_recipe" method="POST">
+            <label for="recipe_title"></label>
+            <input type="text" id="recipe_title" name="recipe_title" placeholder="Recipe Title:"><br><br>
+            <label for="desc"></label>
+            <input required type="text" id="desc" name="desc" placeholder="Brief tag: ex: 'The Best Cookies in the Yamhill County'"><br><br>
+            <label for="prep_time">Prep Time(minutes):</label>
+            <select required name="prep_time" id="prep_time" class="prep_time"></select><br><br>
+            <label for="cook_time">Cook Time(minutes):</label>
+            <select required name="cook_time" id="cook_time" class="cook_time"></select><br><br>
+            <label for="servings">Servings:</label>
+            <select required name="servings" id="servings" class="servings"></select><br><br>
+            <label for="ingredient"></label>
+            <div id="ingredients">
+                <input required name="num_ingredients" type="text" id="ingredient" value="" placeholder="Number of Ingredients:" s>
+                <a class="add_ingred" href="#" id="num_ingredients" onclick="addFields()">Enter</a>
+            </div>
+            <div id="container"></div><br><br>
+            <div class="image_container">
+                <button class="add_image">Add more images &nbsp;
+                    <span style="font-size:16px; font-weight:bold;">+ </span>
+                </button>
+
+            </div><br><br>
+
+        </form>
+        <label for="instructions"></label><br>
+        <textarea form="add_recipe" id="instructions" name="instructions" placeholder="Enter instructions..." rows="10" cols="60"></textarea>
+
+    </div>
+</div>
+<button form="add_recipe" class="submit" type="submit">POST</button>
+<script>
+
+    window.onscroll = function() {myFunction()};
+
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
+
+    const f = document.getElementById('form');
+    const q = document.getElementById('query');
+
+    async function submitted(event) {
+        event.preventDefault();
+        if (q.value !== "")
+        {
+            sessionStorage.setItem("search", q.value);
+            window.location = 'post-search.html';
+        }
+    }
+
+    f.addEventListener('submit', submitted);
+
+    // JQuery for prep time selector
+    $(function(){
+        var $select = $(".prep_time");
+        for (i=0;i<=100;i+=5){
+            $select.append($('<option></option>').val(i).html(i))
+        }
+    });
+
+    // JQuery for cook time selector
+    $(function(){
+        var $select = $(".cook_time");
+        for (i=0;i<=100;i+=5){
+            $select.append($('<option></option>').val(i).html(i))
+        }
+    });
+
+    // JQuery for servings selector
+    $(function(){
+        var $select = $(".servings");
+        for (i=0;i<=10;i++){
+            $select.append($('<option></option>').val(i).html(i))
+        }
+    });
+
+    // Dynamically add input fields for ingredients
+    function addFields(){
+
+        // Generate a dynamic number of inputs
+        const number = document.getElementById("ingredient").value;
+        // Get the element where the inputs will be added to
+        const container = document.getElementById("container");
+        // Get the button element
+        let ingredient_button = document.getElementById("num_ingredients");
+
+        // if user has entered input into the boxes and has now
+        // pressed "collapse" button
+        if (container.style.display === "block")
+        {
+            container.style.display = "none";
+
+            ingredient_button.innerHTML = "Show";
+        }
+        // if the user has not entered any input yet
+        else if (ingredient_button.innerText !== "Show"){
+            container.style.display = "block";
+            ingredient_button.innerHTML = "Collapse";
+            // Remove children it had before
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+            for (i = 0; i < number; i++) {
+                // Append a node with a random text
+                container.appendChild(document.createTextNode("Ingredient " + (i + 1)));
+                // Create an <input> element, set its type and name attributes
+                const input = document.createElement("input");
+                input.type = "text";
+                input.name = "ingredient" + i;
+                container.appendChild(input);
+                // Append a line break
+                container.appendChild(document.createElement("br"));
+            }
+        }
+        // the user has entered input and would like to reveal it for edit
+        else
+        {
+            // if the user has entered more
+            if (number * 2 > container.childElementCount) {
+
+                for (j = container.childElementCount / 2; j < number; j++) {
+                    // Append a node with a random text
+                    container.appendChild(document.createTextNode("Ingredient " + (j + 1)));
+                    // Create an <input> element, set its type and name attributes
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.name = "ingredient" + j;
+                    container.appendChild(input);
+                    // Append a line break
+                    container.appendChild(document.createElement("br"));
+                }
+            }
+            container.style.display = "block";
+
+            ingredient_button.innerHTML = "Collapse";
+        }
+    }
+
+
+    // Dynamically add image selection
+    $(document).ready(function() {
+        var max_fields = 3;
+        var wrapper = $(".image_container");
+        var add_button = $(".add_image");
+
+        var x = 0;
+        $(add_button).click(function(e) {
+            e.preventDefault();
+            if (x < max_fields) {
+                x++;
+                const div = document.createElement("div");
+                div.style.display = "flex";
+                div.style.flexDirection = "row";
+                div.style.gap = "20px";
+                div.style.padding = "2px";
+                wrapper.append(div);
+
+                const input = document.createElement("input");
+                input.placeholder = "Enter image URL";
+                input.type = "url";
+                input.id = "img";
+                input.name = "img" + x;
+                input.style.height = "65%";
+                div.append(input);
+
+                const a = document.createElement("a");
+                a.href = "#";
+                a.className = "delete";
+                a.style.backgroundColor = "#ff4164";
+                a.style.width = "15%";
+                a.style.height = "65%";
+                a.style.color = "white";
+                a.style.textAlign = "center";
+                a.text = "Delete";
+                div.append(a);
+
+                /*
+                $(wrapper).append('<div style="display: flex; flex-direction: row; gap: 20px; padding: 2px;">' +
+                    '<input type="file" id="img" name="img"  accept="image/*"><' +
+                    'a href="#" class="delete" style="background-color: #ff4164;\n' +
+                    '    width: 15%; color: white;\n' +
+                    '    text-align: center;">Delete</a></div>'); //add input box
+
+                 */
+            } else {
+                alert('You Reached the limits')
+            }
+        });
+
+        $(wrapper).on("click", ".delete", function(e) {
+            e.preventDefault();
+            $(this).parent('div').remove();
+            x--;
+        })
+    });
+
+    // listen for log out button
+    const submit_button = document.querySelector('.logout');
+    submit_button.addEventListener('click', logItOnOut);
+
+    async function logItOnOut() {
+        let response = await fetch('/auth/end.php', {
+            method:'POST',
+        });
+        let data = await response.json();
+        if (data.message) {
+            window.location = '/home.html';
+        } else {
+            document.getElementById('errorMessage').innerText = 'Not Logged In';
+        }
+    }
+
+
+    // listen for form submission
+    const submit = document.querySelector('.submit');
+    submit.addEventListener('click', async function (event) {
+        event.preventDefault();
+        let response = await fetch('/auth/status.php', {
+            method: 'POST',
+        });
+        let data = await response.json();
+        if (data.username){
+            await submitPost(data.username);
+            let response = await fetch('blog-post.php?username='+data.username);
+
+            //let
+            //window.location = 'recipe-page.html?=';
+        }
+    });
+
+    async function submitPost(username){
+        let formData = new FormData(document.getElementById('add_recipe'));
+        let post = {};
+        post.username = username;
+
+        post.extra = Object.fromEntries(formData.entries());
+        let response = await fetch('blog-post.php', {
+            method: 'POST',
+            body: JSON.stringify(post),
+        });
+        let data = await response.text();
+        console.log(data);
+
+
+    }
+</script>
+</body>
+</html>

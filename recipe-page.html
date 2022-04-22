@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title id="title"></title>
+    <link href="recipe-page.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="getRecipe()">
+<div class="header" id="myHeader">
+    <div class="searchAndLogo">
+        <div class="headerG">
+            <h2 id="logo">G</h2>
+        </div>
+
+        <form class="searchForm" role="search" id="form">
+            <button>
+                <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
+            </button>
+            <input type="search" id="query" name="q" placeholder="Search for user..." aria-label="Search through site content">
+        </form>
+    </div>
+    <div class="buttonContainer">
+        <div class="buttons">
+            <input class="logout" id="logout" type="submit" value="Log Out">
+            <a href="make-a-post.html" id="post">Post</a>
+
+        </div>
+    </div>
+</div>
+<main>
+    <div class="containter">
+        <div class="content-top">
+            <h1 id="recipe_desc"></h1>
+            <h3>This <span class="title"></span> will change your life. whether you're trying to cut calories, lost weight, try new things...
+                this yummie <span class="title"></span> is perfect for you. Unless you dont follow the direction like I have done many o'
+                times, you'll choose this <span class="title"></span> over other ones every time!!!</h3>
+            <a href="#recipe">Go straight to recipe</a>
+        </div>
+        <div>
+            <img id="img1" alt="finish cookies" class="cookie1" style="display: none">
+        </div>
+        <div>
+            <h3>The bomb dot com</h3>
+            <p>People spend their entire lives like I have trying to perfect the <span class="title"></span>. It doesnt really matter what
+                kind of <span class="title"></span> we're talking about here, they can be hard to get the texture, taste, sweetness, or
+                savoryness, and yes I might've just made that word up. This is why I have created this <span class="title"></span> recipe.
+            </p>
+        </div>
+        <div>
+            <img id="img2" alt="cookie picture" class="cookie-2" style="display: none">
+        </div>
+        <div>
+            <p>The first secret to this recipe is damn near burning the <span class="adlib"></span> until it becomes brown, but not
+                actually burning it on the stove. What this technique accomplishes is multifaceted. Firstly, you now
+                have melted <span class="adlib"></span> which everyone knows helps put everything together, but secondly and most important
+                is the <span class="adlib"></span> gives off a nice natural nutty auroma and flavor.</p>
+            <p>
+                Now, the <span class="adlib"></span> is <em>Just as important</em> as the rest of the ingredients. Choose the wrong <span class="adlib"></span>
+                and you might as well burn your house down. You need
+                <strong>BOB's Red <span class="adlib"></span></strong> one-for-one gluten free <span class="adlib"></span>. Believe me, I have tried many different
+                kinds and this stuff is the best when it comes to replicating the soft fluffy texture that regular
+                glutenous <span class="adlib"></span> has.
+            </p>
+        </div>
+        <div>
+            <img id="img3" alt="cookie picture" class="cookie-3" style="display: none">
+        </div>
+        <div>
+            <p>
+                The next trick is coconut <span class="adlib"></span>. Now this sounds disgusting because who wants to use weird <span class="adlib"></span>
+                that comes from a nut you've probably never seen in your entire life. Well, you do. Why? Because coconut <span class="adlib"></span>
+                is cleaner, greener, healthier, and unlike white <span class="adlib"></span> and any other "normal" <span class="adlib"></span>, it isnt packed
+                full of stuff that your body doesnt need or want. Coconut <span class="adlib"></span> is sweet and natural and great to use.
+                The best part is, you only need <em>3/4 cup</em> of the stuff! If you really have a sweet tooth, you
+                can bump it up to 1 cup, but i'd recommend just 3/4 cup and you and your family will love it. Plus it
+                doesnt leave you feeling like a fat lump afterwards.
+            </p>
+            <p>
+                <strong>PRO TIP:</strong> After you've mixed everything together, make sure to give the <span class="adlib"></span> 30 minutes to rest and rise. This
+                also allows all the ingredients to fully percolate and mix together.
+            </p>
+        </div>
+        <div class="r-container" id="recipe">
+            <div class="recipe-head">
+                <h2 id="recipe_desc1"></h2>
+                <p>
+                    <strong>Author</strong>: <span id="author"></span>
+                    <strong>Prep</strong>: <span id="prep_time"></span>
+                    <strong>Cook</strong>: <span id="cook_time"></span>
+                    <strong>Total</strong>: <span id="total_time"></span>
+                </p>
+            </div>
+            <div class="serving">
+                <h3>Servings: <span id="servings"></span> (depending on how much you eat during prep)</h3>
+            </div>
+            <div class="ingredients-header">
+                <h3>Ingredients</h3>
+            </div>
+            <div id="ingredients_div" class="ingredients">
+
+            </div>
+            <div class="instructions">
+                <h3>Instructions</h3>
+                <p id="instruction_p"></p>
+            </div>
+
+            <div class="description-container">
+                <div class="profile">
+                    <img alt="My Picture" class="mypicture">
+                </div>
+                <div class="description">
+                    <h2>Hi, im Isaac!</h2>
+                    <h3 id="comguy">Computer Science guy</h3>
+                    <p>
+                        Tired of making food that destroys your gut? I was too, so my wife and I set out on a journey to be healthier. Im here to give you a great way to enjoy those household staples you know and love but in a way that keeps you feeling healthy!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    // listen for search
+    const f = document.getElementById('form');
+    const q = document.getElementById('query');
+
+    f.addEventListener('submit', submitted);
+
+    async function submitted(event) {
+        event.preventDefault();
+        if (q.value !== "")
+        {
+            sessionStorage.setItem("search", q.value);
+            window.location = 'post-search.html';
+        }
+    }
+
+    // listen for log out button
+    const submit_button = document.querySelector('.logout');
+    submit_button.addEventListener('click', logItOnOut);
+
+    async function logItOnOut() {
+        let response = await fetch('/auth/end.php', {
+            method:'POST',
+        });
+        let data = await response.json();
+        if (data.message) {
+            window.location = '/home.html';
+        } else {
+            document.getElementById('errorMessage').innerText = 'Not Logged In';
+        }
+    }
+
+    // load page with appropriate values
+    async function getRecipe() {
+        // get post id
+        let id = sessionStorage.getItem("id");
+
+        // fetch the post details
+        let response = await fetch('blog-post.php?id='+id);
+
+        let data = await response.json();
+
+        // get the extra part
+        let extra = JSON.parse(data.extra);
+
+        // set the page title
+        if (extra.hasOwnProperty("recipe_title")) {
+            document.getElementById("title").innerText = extra.recipe_title;
+        }
+
+        // set the page header
+        if (extra.hasOwnProperty("desc"))
+        {
+            document.getElementById("recipe_desc").innerText = extra.desc;
+            document.getElementById("recipe_desc1").innerText = extra.desc;
+        }
+
+
+        if (extra.hasOwnProperty("instructions")) {
+            document.getElementById("instruction_p").innerText = extra.instructions;
+        }
+
+        // load images
+        let i = 1;
+        while (i < 4)
+        {
+            if (extra.hasOwnProperty("img" + i))
+            {
+                let pic = document.getElementById("img" + i);
+                pic.style.display = "block";
+                pic.src = extra["img" + i];
+            }
+            i++;
+        }
+        console.log(data);
+        console.log(extra);
+        console.log(sessionStorage.getItem("search"));
+
+        //set the author/prep/cook/total/serving information
+        document.getElementById("author").innerText = sessionStorage.getItem("search");
+        document.getElementById("prep_time").innerText = extra.prep_time;
+        document.getElementById("cook_time").innerText = extra.cook_time;
+        document.getElementById("total_time").innerText = +extra.prep_time + +extra.cook_time;
+        document.getElementById("servings").innerText = extra.servings;
+
+        // set the text content to be somewhat relevant, but mostly funny
+        let adlib = document.getElementsByClassName("adlib");
+        for (let j = 0; j < adlib.length; j++) {
+            adlib.item(j).innerHTML = extra.ingredient0;
+        }
+
+        let title = document.getElementsByClassName("title");
+        for (let k = 0; k < title.length; k++)
+        {
+            title.item(k).innerHTML = extra.recipe_title;
+        }
+
+        // set the ingredients
+
+        // get a hold of parent element
+        let ingred_div = document.getElementById("ingredients_div");
+        for (let l = 0; l < extra.num_ingredients; l++)
+        {
+            const label = ingred_div.appendChild(document.createElement('label'));
+            label.className = "container";
+            // change text of label if ingredient is not empty
+            if (extra["ingredient" + l] !== "")
+            {
+                label.innerText = extra["ingredient" + l];
+            }
+            const input = label.appendChild(document.createElement('input'));
+            input.type = "checkbox";
+
+            const span = label.appendChild(document.createElement('span'));
+            span.className = "checkmark";
+        }
+
+
+
+
+
+    }
+</script>
+</body>
+</html>
