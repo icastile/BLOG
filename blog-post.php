@@ -95,9 +95,9 @@ else if ($request->isPost()) {
 
         $sql = 'insert into post (id, user_id, post_date, post_text, extra) 
                 values (:id, :user_id, :post_date, :post_text, :extra)';
-        var_dump($sql);
+
         $success = getSuccess($highNum["max"], $id, $reqVars, $db, $sql);
-        var_dump($success);
+
 
         $results = ['message' => $success ? 'Success' : 'Did not add blog post'];
         http_response_code(202);

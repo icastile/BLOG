@@ -106,22 +106,95 @@
                 <p id="instruction_p"></p>
             </div>
 
-            <div class="description-container">
-                <div class="profile">
-                    <img alt="My Picture" class="mypicture">
-                </div>
+            <div class="comment-container">
                 <div class="description">
-                    <h2>Hi, im Isaac!</h2>
-                    <h3 id="comguy">Computer Science guy</h3>
-                    <p>
-                        Tired of making food that destroys your gut? I was too, so my wife and I set out on a journey to be healthier. Im here to give you a great way to enjoy those household staples you know and love but in a way that keeps you feeling healthy!
-                    </p>
+                    <h1>Comments</h1>
+                    <h3 id="comguy">Lets talk about the <span class="adlib"></span></h3>
+                    <div class="container">
+                        <label for="newComment" name="newComment">Add your comment below-</label>
+                        <textarea maxlength="45" id="newComment" rows="8" cols="60" style="font-size: 14pt"></textarea>
+                        <button id="addComments">Add Comment</button>
+                        <div id="allComments"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
 <script>
+
+    const commentContainer = document.getElementById('allComments');
+    document.getElementById('addComments').addEventListener('click', function (event) {
+        if (document.getElementById("newComment").value !== "") {
+            addComment(event);
+        }
+        else {
+            alert("Enter Message");
+        }
+
+    });
+
+    async function addComment(event) {
+        let commentText
+        const textBox = document.createElement('div');
+        textBox.style.height = "15%";
+        // create a delete button for each comment (only for the ones that belong to the user)
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = 'Delete';
+        deleteButton.className = 'deleteComment';
+
+        const wrapDiv = document.createElement('div');
+        wrapDiv.className = 'wrapper';
+        wrapDiv.style.marginLeft = 0;
+        commentText = document.getElementById('newComment').value;
+        document.getElementById('newComment').value = '';
+        textBox.innerHTML = commentText;
+        textBox.className = "comment_area";
+        wrapDiv.append(textBox, deleteButton);
+        commentContainer.appendChild(wrapDiv);
+
+
+        // make a rest request to add a comment
+        let comment = {};
+        comment.username = sessionStorage.getItem("username");
+        comment.post_id = sessionStorage.getItem("post_id");
+        comment.comment_text = commentText;
+        console.log(comment);
+
+        let response = await fetch("blog-comment.php", {
+            method: 'POST',
+            body: JSON.stringify(comment),
+        });
+        let data = await response.json();
+        console.log(data);
+
+        if (data.hasOwnProperty("comment_id"))
+        {
+            wrapDiv.id = JSON.stringify(data["comment_id"]);
+        }
+    }
+
+    function hasClass(elem, className) {
+        return elem.className.split(' ').indexOf(className) > -1;
+    }
+
+    document.getElementById('allComments').addEventListener('click', async function (e) {
+         if(hasClass(e.target, 'deleteComment')) {
+             e.target.parentElement.remove();
+             let del = {};
+             del.comment_id = e.target.parentElement.id;
+             console.log(del);
+             // TODO DELETE FROM DB
+            let response = await fetch('blog-comment.php', {
+                method: 'DELETE',
+                body: JSON.stringify(del),
+            })
+            let data = await response.json();
+
+        }
+    });
+
+
     // listen for search
     const f = document.getElementById('form');
     const q = document.getElementById('query');
@@ -156,7 +229,7 @@
     // load page with appropriate values
     async function getRecipe() {
         // get post id
-        let id = sessionStorage.getItem("id");
+        let id = sessionStorage.getItem("post_id");
 
         // fetch the post details
         let response = await fetch('blog-post.php?id='+id);
@@ -237,12 +310,62 @@
             const span = label.appendChild(document.createElement('span'));
             span.className = "checkmark";
         }
+        await loadComments();
+    }
+
+    async function loadComments(){
+        let response = await fetch('blog-comment.php?post_id=' + sessionStorage.getItem("post_id"));
+
+        let comments = await response.json();
+
+        console.log(sessionStorage.getItem("username"));
+
+        // get ahold of the comment section
+        const commentContainer = document.getElementById('allComments');
+        console.log(commentContainer);
 
 
 
 
+        console.log(comments);
+
+        for (let i = 0; i < comments.length; i++)
+        {
+            const wrapDiv = document.createElement('div');
+            wrapDiv.className = 'wrapper';
+            wrapDiv.style.marginLeft = 0;
+
+            const textBox = document.createElement('div');
+            textBox.innerHTML = comments[i].comment_text;
+            textBox.className = "comment_area";
+            wrapDiv.id = JSON.stringify(comments[i].id);
+
+            wrapDiv.append(textBox);
+
+            // add a delete button ONLY IF THE USER MADE THE COMMENT
+            if (sessionStorage.getItem("username") === comments[i].username) {
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = 'Delete';
+                deleteButton.className = 'deleteComment';
+                wrapDiv.appendChild(deleteButton);
+            }
+            else
+            {
+                textBox.style.textAlign = "right";
+                textBox.style.paddingRight = "3%";
+                textBox.style.height = "35%";
+
+            }
+
+
+            commentContainer.appendChild(wrapDiv);
+        }
 
     }
+
+
+
+
 </script>
 </body>
 </html>

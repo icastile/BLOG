@@ -1,5 +1,6 @@
 <?php
-
+ini_set('display_errors',1);
+error_reporting(E_ALL);
 
 /**
  * returns true if the key exists in both reqVars and the DB
@@ -31,12 +32,13 @@ function getSuccess($id, $user_id, $reqVars, PDO $db, string $sql): bool
     $queryVars = [
         ':id' => $id,
         ':user_id' => $user_id,
-        ':post_date' => date("Y/m/d"),
-        ':post_text' => "Technically not Null",
-        ':extra' => json_encode($reqVars["extra"]),
+        ':post_id' => $reqVars["post_id"],
+        ':comment_text' => $reqVars["comment_text"],
+        ':comment_date' => date("Y/m/d"),
     ];
 
     $stmt = $db->prepare($sql);
+
 
     return $stmt->execute($queryVars);
 }
@@ -69,19 +71,14 @@ function containsAllVars($reqVars): bool
  */
 function keyInDB($db, $reqVars): bool
 {
-    $key = "username";
-    $value = $reqVars["username"];
-    $resource = "blog_user";
-    if ($value == NULL)
-    {
-        $key = "id";
-        $value = $reqVars["id"];
-        $resource = "post";
-    }
-    $checkSql = 'select count(*) from ' . $resource . ' where ' . $key . ' = :value';
+    $key = "post_id";
+    $value = $reqVars["post_id"];
+
+    $checkSql = 'select count(*) from blog_comment where ' . $key . ' = :value';
     $checkStmt = $db->prepare($checkSql);
     $checkStmt->execute([$reqVars[$key]]);
 
     return $checkStmt->fetchColumn() == 1;
 
 }
+
